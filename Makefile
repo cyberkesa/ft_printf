@@ -12,11 +12,12 @@
 
 NAME=libftprintf.a
 
-SRCS=	ft_printf.c\
-		pf_s.c
-OBJECTS=	ft_printf.o\
-			pf_s.o
-INCLUDES= ./inc
+SRCS=		ft_printf.c \
+			pf_s.c \
+			pf_di.c \
+			pf_utils.c
+OBJECTS=	$(patsubst %.c, %.o, $(SRCS))
+INCLUDES= 	./inc
 
 #CFLAGS = -Wall -Wextra -Werror
 
