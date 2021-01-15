@@ -75,6 +75,30 @@ void		pf_print_char(char *s, int n)
 		}
 }
 
+char		*pf_itoa_base(int value, int base)
+{
+	static	char rep[] = "0123456789abcdef";
+	static	char buf[50];
+	char	*ptr;
+	int		num;
+
+	ptr = &buf[49];
+	*ptr = '\0';
+	num = value;
+	if (value < 0 && base == 10)
+		value *= -1;
+	if (value == 0)
+		*--ptr = rep[value % base];
+	while (value != 0)
+	{
+		*--ptr = rep[value % base];
+		value /= base;
+	}
+	if (num < 0 && base == 10)
+		*--ptr = '-';
+	return (ptr);
+}
+
 //void		print_x(char *s, int n)
 //{
 
@@ -85,18 +109,52 @@ void		pf_print_char(char *s, int n)
 
 //}
 
-//void		print_p(char *s, int n)
-//{
+void		print_p(t_flag *flag)
+{
+	int		nnull;
+	int		nspace;
 
-//}
+	if (flag->precision > 1 || flag->sign == 1)
+		flag->null = 0;
+	if (flag->original < 0)
+		flag->sign = 1;
+	nnull = flag->precision - flag->len_data_u;
+	nnull = (nnull < 0) ? 0 : nnull;
+	nspace = flag->wight - (flag->sign + flag->len_data_u + nnull);
+	nspace = (nspace < 0) ? 0 : nspace;
+	if (flag->minus == 0 && flag->null == 0)
+		pf_print(' ', nspace);
+	pf_print_char("0x", 2);
+	if (flag->minus == 0 && flag->null == 1)
+		pf_print('0', nspace);
+	pf_print('0', nnull);
+	ft_putstr_fd(pf_itoa_base(flag->data_p, 16), 1);
+	if (flag->minus == 1)
+		pf_print(' ', nspace);
+	pf_ret(nspace + flag->sign + flag->len_data_u + nnull, 0);
+}
 
 void		di_null(t_flag *flag)
 {
 	int		nspace;
 
 	nspace = flag->wight;
-	if (nspace < 0)
-		nspace = 0;
+	nspace = (nspace < 0) ? 0 : nspace;
+	if (flag->minus == 0 && flag->null == 0)
+		pf_print(' ', nspace);
+	if (flag->minus == 0 && flag->null == 1)
+		pf_print('0', nspace);
+	if (flag->minus == 1)
+		pf_print(' ', nspace);
+	pf_ret(nspace, 0);
+}
+
+void		u_null(t_flag *flag)
+{
+	int		nspace;
+
+	nspace = flag->wight;
+	nspace = (nspace < 0) ? 0 : nspace;
 	if (flag->minus == 0 && flag->null == 0)
 		pf_print(' ', nspace);
 	if (flag->minus == 0 && flag->null == 1)
@@ -126,47 +184,13 @@ void		s_null(t_flag *flag)
 	}
 	if (flag->precision == 0 && flag->p_yes == 1)
 		nspace = flag->wight;
-	if (nspace < 0)
-		nspace = 0;
+	nspace = (nspace < 0) ? 0 : nspace;
 	if (flag->minus == 0 && nspace)
 		pf_print(' ', nspace);
 	if (flag->precision > 0 && flag->precision < 6)
-		ft_putstr_fd(null, flag->precision);
+		pf_print_char(null, flag->precision);
 	if (flag->precision >= 6 || (flag->precision == 0 && flag->p_yes == 0))
 		ft_putstr_fd(null, 1);
-	if (flag->minus == 1 && nspace)
-		pf_print(' ', nspace);
-	pf_ret(nspace, 0);
-}
-
-void		print_s(t_flag *flag)
-{
-	int		nspace;
-
-	nspace = 0;
-	flag->len_s = ft_strlen(flag->data_s);
-	if (flag->precision > 0)
-	{
-		nspace = flag->wight - flag->precision;
-		pf_ret(flag->precision, 0);
-	}
-	else if (flag->precision <= 0)
-		nspace = flag->wight - flag->len_s;
-	if (nspace < 0)
-		nspace = 0;
-	if (flag->minus == 0 && nspace)
-		pf_print(' ', nspace);
-	if (flag->wight < 0)
-		flag->wight = -flag->wight;
-	if (flag->precision < 0 || flag->p_yes == 0)
-	{
-		ft_putstr_fd(flag->data_s, 1);
-		pf_ret(flag->len_s, 0);
-	}
-	if (flag->precision > 0 && flag->precision <= flag->len_s)
-		pf_print_char(flag->data_s, flag->precision);
-	if (flag->precision > 0 && flag->precision > flag->len_s)
-		pf_print_char(flag->data_s, flag->len_s);
 	if (flag->minus == 1 && nspace)
 		pf_print(' ', nspace);
 	pf_ret(nspace, 0);
@@ -177,8 +201,7 @@ void		print_c(t_flag *flag)
 	int		nspace;
 
 	nspace = flag->wight - 1;
-	if (nspace < 0)
-		nspace = 0;
+	nspace = (nspace < 0) ? 0 : nspace;
 	if (flag->minus == 0)
 		pf_print(' ', nspace);
 	if (flag->data_c == 0)
@@ -194,23 +217,26 @@ void		print_u(t_flag *flag)
 	int		nnull;
 	int		nspace;
 
-	if (flag->precision > 1)
+	if (flag->precision > 1 || flag->sign == 1)
 		flag->null = 0;
+	if (flag->original < 0)
+		flag->sign = 1;
 	nnull = flag->precision - flag->len_data_u;
-	if (nnull < 0)
-		nnull = 0;
-	nspace = flag->wight - (flag->len_data_u + nnull);
+	nnull = (nnull < 0) ? 0 : nnull;
+	nspace = flag->wight - (flag->sign + flag->len_data_u + nnull);
 	if (nspace < 0)
 		nspace = 0;
 	if (flag->minus == 0 && flag->null == 0)
 		pf_print(' ', nspace);
+	if (flag->sign != 0)
+		pf_print('-', flag->sign);
 	if (flag->minus == 0 && flag->null == 1)
 		pf_print('0', nspace);
 	pf_print('0', nnull);
-	if (flag->data_u > 0)
 		ft_putnbr_fd(flag->data_u, 1);
 	if (flag->minus == 1)
 		pf_print(' ', nspace);
+	pf_ret(nspace + flag->sign + flag->len_data_u + nnull, 0);
 }
 
 void		print_di(t_flag *flag)
@@ -225,11 +251,9 @@ void		print_di(t_flag *flag)
 	if (flag->original == -2147483648)
 		flag->sign = 0;
 	nnull = flag->precision - flag->len_data_u;
-	if (nnull < 0)
-		nnull = 0;
+	nnull = (nnull < 0) ? 0 : nnull;
 	nspace = flag->wight - (flag->sign + flag->len_data_u + nnull);
-	if (nspace < 0)
-		nspace = 0;
+	nspace = (nspace < 0) ? 0 : nspace;
 	if (flag->minus == 0 && flag->null == 0)
 		pf_print(' ', nspace);
 	if (flag->sign != 0)
@@ -289,10 +313,10 @@ char		*pf_parcespec(const char *format, t_flag *flag, va_list *ap)
 	if (*flag->spec == 's')
 	{
 		flag->data_s = va_arg(*ap, char*);
-		if (flag->data_s != 0)
-			print_s(flag);
-		else
+		if (flag->data_s == 0)
 			s_null(flag);
+		else
+			print_s(flag);
 	}
 	if (*flag->spec == '%')
 		print_percentum(flag);
@@ -321,17 +345,22 @@ char		*pf_parcespec(const char *format, t_flag *flag, va_list *ap)
 		s = ft_itoa(flag->data_u);
 		flag->len_data_u = ft_strlen(s);
 		free(s);
-		print_u(flag);
+		if (flag->precision < 0)
+			flag->precision = 0;
+		if (flag->data_u == 0 && flag->precision == 0 && flag->p_yes == 1)
+			u_null(flag);
+		else
+			print_u(flag);
 	}
-	//if (*spec == 'x')
+	//if (*flag->spec == 'x')
 	//	print_x(flag);
-	//if (*spec == 'X')
+	//if (*flag->spec == 'X')
 	//	print_X(flag);
-	//if (*spec == 'p')
-	//{
-	//	flag->data_p = va_arg(*ap, unsigned int);
-	//	print_p(flag);
-	//}
+	if (*flag->spec == 'p')
+	{
+		flag->data_p = va_arg(*ap, unsigned long);
+		print_p(flag);
+	}
 	return (ft_strchr(format, *flag->spec));
 }
 

@@ -17,7 +17,7 @@ typedef struct		s_flags
 	int				p_yes;
 	int				original;
 	int				di_unsigned;
-	int				data_p;
+	unsigned long	data_p;
 	int				sign;
 	int				len_data_o;
 	int				len_data_u;
@@ -44,6 +44,11 @@ void		pf_print_char(char *s, int n);
 void		pf_print(int c, size_t n);
 char		*ft_strchr_time(const char *s, int c);
 char		*super_ft_strchr(const char *s, int c);
+void		ft_putnbr_base_fd(int n, int fd, int base);
+
+
+
+char		*pf_itoa_base(int value, int base);
 
 
 #endif

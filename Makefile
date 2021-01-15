@@ -12,8 +12,10 @@
 
 NAME=libftprintf.a
 
-SRCS= ft_printf.c
-OBJECTS= ft_printf.o
+SRCS=	ft_printf.c\
+		pf_s.c
+OBJECTS=	ft_printf.o\
+			pf_s.o
 INCLUDES= ./inc
 
 #CFLAGS = -Wall -Wextra -Werror
