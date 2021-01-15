@@ -1,4 +1,4 @@
 pft_2019
-*.0
-*.aut
+*.o
+*.out
 test
