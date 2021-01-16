@@ -64,19 +64,25 @@ OBJECTS	=		$(addprefix $(OBJECTS_PATH), $(OBJECTS_LIST))
 all: $(NAME)
 
 $(NAME): $(OBJECTS_PATH) $(OBJECTS)
-	ar rc $(NAME) $(OBJECTS)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJECTS)
+	@ranlib $(NAME)
+	@printf "\x1b[32mCreate: "
+	@printf $@
+	@printf "\x1b[0m\n"
 
 $(OBJECTS_PATH):
-	mkdir -p $(OBJECTS_PATH)
+	@mkdir -p $(OBJECTS_PATH)
 
 $(OBJECTS_PATH)%.o : $(SOURCES_PATH)%.c $(HEADERS)
-	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+	@printf "\x1b[33mCompile object: "
+	@printf $(notdir $@)
+	@printf "\x1b[0m\n"
 
 clean:
-	rm -rf $(OBJECTS_PATH)
+	@rm -rf $(OBJECTS_PATH)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

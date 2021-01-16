@@ -10,38 +10,60 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME=libftprintf.a
+NAME = libftprintf.a
 
-SRCS=		ft_printf.c \
+LIBFT = ./Libft/libft.a
+
+OBJD = objects/
+
+SRCS =		ft_printf.c \
 			pf_s.c \
 			pf_di.c \
 			pf_utils.c
-OBJECTS=	$(patsubst %.c, %.o, $(SRCS))
-INCLUDES= 	./inc
 
-#CFLAGS = -Wall -Wextra -Werror
+OBJECTS =	$(addprefix $(OBJD), $(patsubst %.c, %.o, $(SRCS)))
 
-CC= gcc
+INCLUDES = 	./inc
+
+CFLAGS = -Wall -Werror -Wextra
+
+CC = gcc
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	@make -C ./Libft re
-	@ar -rcs $(NAME) $(OBJECTS) ./Libft/objects/*.o
+$(NAME):: $(LIBFT)
+$(NAME):: $(OBJD) $(OBJECTS)
+	@cp $(LIBFT) .
+	@ar -rc $(notdir $(LIBFT)) $(OBJECTS)
+	@mv $(notdir $(LIBFT)) $(NAME)
 	@ranlib $(NAME)
-%.o:%.c
+	@printf "\x1b[32mCreate: "
+	@printf $@
+	@printf "\x1b[0m\n"
+
+$(LIBFT):
+	@make -C ./Libft
+
+$(OBJD)%.o: %.c
 	@$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
+	@printf "\x1b[33mCompile object: "
+	@printf $(notdir $@)
+	@printf "\x1b[0m\n"
+
+$(OBJD):
+	@mkdir -p objects
+
 clean:
-	@make -C ./Libft clean
-	@/bin/rm -f $(OBJECTS)
+	@make clean -C ./Libft
+	@rm -rf $(OBJD)
 
 fclean: clean
-	@make -C ./Libft fclean
-	@/bin/rm -f $(NAME)
+	@make fclean -C ./Libft
+	@rm -f $(NAME)
 
 re: fclean all
 
 test: $(NAME)
-	$(CC) $(CFLAGS) $(NAME) -L Libft -lft main.c -o test
+	$(CC) $(CFLAGS) main.c $(NAME) -o test
 
 .PHONY: clean fclean all re test

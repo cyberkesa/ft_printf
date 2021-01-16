@@ -2,3 +2,7 @@ pft_2019
 *.o
 *.out
 test
+*.a
+.idea
+*.dSYM
+.DS_Store
