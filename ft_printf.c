@@ -29,14 +29,6 @@ int			precision(const char *precision_format, va_list *ap, t_t *t)
 char		*pf_widht(const char *format, t_t *t, va_list *ap)
 {
 	t->s = 0;
-	if (format[0] == '-' || format[1] == '-' || format[2] == '-')
-		t->minus = 1;
-	if (format[0] == '0')
-		t->null = 1;
-	if (ft_atoi(format))
-		t->wight = ft_unsigned_atoi(format);
-	if (t->wight == 0 && t->null == 1)
-		t->wight = ft_unsigned_atoi(format + 1);
 	t->s = findsymbol(format, '*');
 	if (pf_find(format, '*') && t->s[0] != '.')
 	{
@@ -47,6 +39,14 @@ char		*pf_widht(const char *format, t_t *t, va_list *ap)
 			t->minus = 1;
 		}
 	}
+	if (format[0] == '-' || format[1] == '-' || format[2] == '-')
+		t->minus = 1;
+	if (format[0] == '0')
+		t->null = 1;
+	if (ft_atoi(format))
+		t->wight = ft_unsigned_atoi(format);
+	if (t->wight == 0 && t->null == 1)
+		t->wight = ft_unsigned_atoi(format + 1);
 	t->s = pf_find(format, '.');
 	if (t->s)
 		t->precision = precision(t->s + 1, ap, t);

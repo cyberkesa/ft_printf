@@ -67,7 +67,4 @@ fclean: clean
 
 re: fclean all
 
-test: $(NAME)
-	$(CC) $(CFLAGS) main.c $(NAME) -o test
-
-.PHONY: clean fclean all re test
+.PHONY: clean fclean all re

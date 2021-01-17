@@ -80,7 +80,9 @@ void		s_null(t_t *t)
 
 void		s_null_print(t_t *t, char *null)
 {
-	if (t->minus == 0 && t->nspace)
+	if (t->null == 1 && t->nspace)
+		pf_print('0', t->nspace);
+	if (t->minus == 0 && t->nspace && t->null == 0)
 		pf_print(' ', t->nspace);
 	if (t->precision > 0 && t->precision < 6)
 		pf_print_char(null, t->precision);

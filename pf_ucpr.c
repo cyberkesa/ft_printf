@@ -14,17 +14,8 @@
 
 void		u_null(t_t *t)
 {
-	int		nspace;
-
-	nspace = t->wight;
-	nspace = (nspace < 0) ? 0 : nspace;
-	if (t->minus == 0 && t->null == 0)
-		pf_print(' ', nspace);
-	if (t->minus == 0 && t->null == 1)
-		pf_print('0', nspace);
-	if (t->minus == 1)
-		pf_print(' ', nspace);
-	pf_ret(nspace, 0);
+	pf_print('0', 1);
+	pf_ret(1, 0);
 }
 
 void		print_c(t_t *t)

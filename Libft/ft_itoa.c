@@ -12,26 +12,51 @@
 
 #include "libft.h"
 
+static	int	len(long l)
+{
+	int		len;
+
+	len = 0;
+	if (l < 0)
+	{
+		l *= -1;
+		len++;
+	}
+	if (l == 0)
+	{
+		return (1);
+	}
+	while (l > 0)
+	{
+		l /= 10;
+		len++;
+	}
+	return (len);
+}
+
 char		*ft_itoa(int n)
 {
-	char	*str;
+	char	*array;
+	long	l;
+	int		i;
 
-	if (!(str = (char *)malloc(sizeof(char) * 2)))
+	l = n;
+	i = len(l);
+	if (!(array = (char*)malloc(sizeof(char) * (i + 1) + (l <= 0 ? 0 : 1))))
 		return (NULL);
-	if (n == -2147483648)
-		return (str = ft_strdup("-2147483648"));
-	if (n < 0)
+	array[i--] = '\0';
+	if (l == 0)
+		array[0] = 48;
+	if (l < 0)
 	{
-		str[0] = '-';
-		str[1] = '\0';
-		str = ft_strjoin(str, ft_itoa(-n));
+		array[0] = '-';
+		l = l * -1;
 	}
-	else if (n >= 10)
-		str = ft_strjoin(ft_itoa(n / 10), ft_itoa(n % 10));
-	else if (n < 10 && n >= 0)
+	while (l > 0)
 	{
-		str[0] = n + '0';
-		str[1] = '\0';
+		array[i] = 48 + (l % 10);
+		l = l / 10;
+		i--;
 	}
-	return (str);
+	return (array);
 }

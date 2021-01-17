@@ -81,5 +81,6 @@ int					ft_intlen_base(unsigned long nbr, int base);
 char				*pf_itoa_base(unsigned long nbr, int base);
 char				*pf_itoa_base_big(unsigned long nbr, int base);
 char				*ft_itoa_long(long n);
+char				*pf_itoa(int n);
 
 #endif
