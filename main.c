@@ -318,17 +318,37 @@ int		main()
 	//printf("real	|%-*.3s|\n", 9, str);
 	//ft_printf("my	|%-*.3s|\n", 9, str);
 
-	printf("\nTest 's'		#9\n");
-	printf("real	|%0*.*s|\n", 21, m, str);
-	ft_printf("my	|%0*.*s|\n", 21, m, str);
+	//printf("\nTest 's'		#9\n");
+	//printf("real	|%0*.*s|\n", 21, 0, str);
+	//ft_printf("my	|%0*.*s|\n", 21, 0, str);
 
-	printf("\nTest 's'		#10\n");
-	printf("real	|%*.*s|\n", -8, -8, str);
-	ft_printf("my	|%*.*s|\n", -8, -8, str);
+	//printf("\nTest 's'		#10\n");
+	//printf("real	|%*.*s|\n", -8, -8, str);
+	//ft_printf("my	|%*.*s|\n", -8, -8, str);
 
-	printf("\nTest 's'		#11\n");
-	printf("real	|%*s|\n", -20, str);
-	ft_printf("my	|%*s|\n", -20, str);
+	//printf("\nTest 's'		#11\n");
+	//printf("real	|%*s|\n", -20, str);
+	//ft_printf("my	|%*s|\n", -20, str);
+
+	printf("\nTest 's'		#A1\n");
+	printf(" %d", printf("real	|%-3.6s|\n", "hi low\0don't print me lol\0"));
+	printf(" %d", ft_printf("my	|%-3.6s|\n", "hi low\0don't print me lol\0"));
+
+	printf("\nTest 's'		#A2\n");
+	printf(" %d", printf("real	|%-12.6s|\n", "hi low\0don't print me lol\0"));
+	printf(" %d", ft_printf("my	|%-12.6s|\n", "hi low\0don't print me lol\0"));
+
+	printf("\nTest 's'		#A3\n");
+	printf(" %d", printf("real	|%20.6s|\n", "hi low\0don't print me lol\0"));
+	printf(" %d", ft_printf("my	|%20.6s|\n", "hi low\0don't print me lol\0"));
+
+	printf("\nTest 's'		#A4\n");
+	printf("real	|%20.6s|\n", "hi low\0don't print me lol\0");
+	ft_printf("my	|%20.6s|\n", "hi low\0don't print me lol\0");
+
+	printf("\nTest 's'		#A5\n");
+	printf("real	|%10.s|\n", "hi low\0don't print me lol\0");
+	ft_printf("my	|%10.s|\n", "hi low\0don't print me lol\0");
 
 	//printf("\nTest 's'		#12\n");
 	//printf("real	|%.0s|\n", str);
@@ -387,8 +407,8 @@ int		main()
 	//ft_printf("my	|%.s|\n", NULL);
 
 	//printf("\n			#7\n");
-	//printf("real	|%s|\n", NULL);
-	//ft_printf("my	|%s|\n", NULL);
+	//printf("real	|%0-99u|\n", 4294967295U);
+	//ft_printf("my	|%0-99u|\n", 4294967295U);
 
 	//printf("\n			#8\n");
 	//printf("real	|%.0s|\n", NULL);
@@ -570,9 +590,9 @@ int		main()
 	//printf("real	|%u|\n", -2);
 	//ft_printf("my	|%u|\n", -2);
 
-	//printf("\n\033[0;33mTest ----'p'----	\033[0m#1\n");
-	//printf("real	|%08p|\n", str);
-	//ft_printf("my	|%08p|\n", str);
+	printf("\n\033[0;33mTest ----'p'----	\033[0m#1\n");
+	printf("real	|%.19p|\n", pf_ret);
+	ft_printf("my	|%.19p|\n", pf_ret);
 
 	//printf("\n\033[0;33mTest ----'x'----	\033[0m#1\n");
 	//printf("real	|%x|\n", u);
@@ -593,10 +613,6 @@ int		main()
 	//printf("\nTest 'X'		#2\n");
 	//printf("real	|%X|\n", -1);
 	//ft_printf("my	|%X|\n", -1);
-
-
-
-
 
 
 //	void		print_s(t_t *t)

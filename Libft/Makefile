@@ -66,18 +66,19 @@ all: $(NAME)
 $(NAME): $(OBJECTS_PATH) $(OBJECTS)
 	@ar rc $(NAME) $(OBJECTS)
 	@ranlib $(NAME)
-	@printf "\x1b[32mCreate: "
+	@printf "\x1b[7mCreate: "
 	@printf $@
-	@printf "\x1b[0m\n"
+	@printf "\n\x1b[0m\n"
 
 $(OBJECTS_PATH):
 	@mkdir -p $(OBJECTS_PATH)
 
 $(OBJECTS_PATH)%.o : $(SOURCES_PATH)%.c $(HEADERS)
 	@$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
-	@printf "\x1b[33mCompile object: "
+	@printf "\x1b[2m\x1b[m Compile object: "
 	@printf $(notdir $@)
 	@printf "\x1b[0m\n"
+	@printf "\n"
 
 clean:
 	@rm -rf $(OBJECTS_PATH)

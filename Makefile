@@ -19,7 +19,11 @@ OBJD = objects/
 SRCS =		ft_printf.c \
 			pf_s.c \
 			pf_di.c \
-			pf_utils.c
+			pf_utils.c\
+			pf_px.c \
+			pf_parce.c \
+			pf_ucpr.c \
+			pf_itoa.c
 
 OBJECTS =	$(addprefix $(OBJD), $(patsubst %.c, %.o, $(SRCS)))
 
@@ -37,18 +41,18 @@ $(NAME):: $(OBJD) $(OBJECTS)
 	@ar -rc $(notdir $(LIBFT)) $(OBJECTS)
 	@mv $(notdir $(LIBFT)) $(NAME)
 	@ranlib $(NAME)
-	@printf "\x1b[32mCreate: "
+	@printf "\x1b[7m Create: "
 	@printf $@
-	@printf "\x1b[0m\n"
+	@printf "\x1b[7m\n"
 
 $(LIBFT):
 	@make -C ./Libft
 
 $(OBJD)%.o: %.c
 	@$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
-	@printf "\x1b[33mCompile object: "
+	@printf "\x1b[2m\x1b[m Compile object: "
 	@printf $(notdir $@)
-	@printf "\x1b[0m\n"
+	@printf "\x0b\n"
 
 $(OBJD):
 	@mkdir -p objects

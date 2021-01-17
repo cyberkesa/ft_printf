@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unsigned_atoi.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vwinfred <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/17 03:10:25 by vwinfred          #+#    #+#             */
+/*   Updated: 2021/01/17 03:10:27 by vwinfred         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-static	int		ft_isspace(int c)
+static int			ft_isspace(int c)
 {
 	if (c == 32)
 		return (1);
@@ -10,7 +22,7 @@ static	int		ft_isspace(int c)
 		return (0);
 }
 
-int		ft_unsigned_atoi(const char *str)
+int					ft_unsigned_atoi(const char *str)
 {
 	unsigned long	result;
 	size_t			i;

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pf_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vwinfred <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/16 06:37:16 by vwinfred          #+#    #+#             */
+/*   Updated: 2021/01/16 06:37:17 by vwinfred         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-char		*super_ft_strchr(const char *s, int c)
+char			*pf_find(const char *s, int c)
 {
-	size_t i;
+	size_t		i;
 
 	i = 0;
 	while (ft_strchr(".*-1234567890", s[i]))
@@ -16,9 +28,9 @@ char		*super_ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char		*ft_strchr_time(const char *s, int c)
+char			*findsymbol(const char *s, int c)
 {
-	size_t	i;
+	size_t		i;
 
 	i = 0;
 	while (s[i] != '\0')
@@ -32,16 +44,17 @@ char		*ft_strchr_time(const char *s, int c)
 	return (NULL);
 }
 
-int			pf_ret(int	i, int	s)
+int				pf_ret(int i, int s)
 {
-	int	static ret;
+	static int	ret;
+
 	if (s)
 		ret = 0;
 	ret += i;
 	return (ret);
 }
 
-void		pf_print(int c, size_t n)
+void			pf_print(int c, size_t n)
 {
 	if (n && c)
 		while (n != 0)
@@ -51,7 +64,7 @@ void		pf_print(int c, size_t n)
 		}
 }
 
-void		pf_print_char(char *s, int n)
+void			pf_print_char(char *s, int n)
 {
 	if (n && s)
 		while (n--)
